@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Petly</string>  <!-- 앱 이름을 Petly로 설정 -->
+</resources>

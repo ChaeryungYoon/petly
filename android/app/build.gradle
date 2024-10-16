@@ -1,0 +1,58 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+android {
+    namespace = "com.example.petly"
+    compileSdk 34  // 최신 Android SDK로 설정
+
+    defaultConfig {
+        applicationId "com.example.petly"
+        minSdkVersion 23  // Firebase Auth에서 요구하는 최소 SDK 버전
+        targetSdkVersion 34  // 최신 타겟 SDK로 설정
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            // 릴리스 빌드에 대한 코드 및 리소스 축소
+            minifyEnabled true  // 릴리즈 모드에서만 코드 축소 사용
+            shrinkResources true  // 리소스 축소 사용
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'  // ProGuard 규칙 파일
+            signingConfig = signingConfigs.debug
+        }
+
+        debug {
+            // 디버그 빌드에서는 코드 및 리소스 축소 비활성화
+            minifyEnabled false
+            shrinkResources false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+flutter {
+    source = "../.."
+}
+
+dependencies {
+    implementation 'com.google.firebase:firebase-auth:22.0.0'  // 최신 Firebase Auth 버전
+    implementation 'com.google.firebase:firebase-messaging:23.0.0' // Firebase Messaging 필요 시 추가 가능
+    implementation 'androidx.core:core-ktx:1.9.0'  // Kotlin 확장 기능 추가
+    implementation 'androidx.appcompat:appcompat:1.4.1'  // AndroidX 앱 호환성 라이브러리
+    implementation platform('com.google.firebase:firebase-bom:31.1.0')  // Firebase 의존성 관리 (BOM 사용)
+}
+
+apply plugin: 'com.google.gms.google-services'  // Firebase 플러그인 적용
+
