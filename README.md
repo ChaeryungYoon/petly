@@ -1,127 +1,39 @@
-Petly App
-프로젝트 개요
-Petly는 반려동물 관리 앱으로, 사용자에게 반려동물의 건강 관리, 예방접종 일정, 주간 스케줄 등을 관리할 수 있는 기능을 제공합니다. 이 앱은 Flutter를 기반으로 개발되었습니다.
+# Petly 앱 개발 진행 상황
 
-사용 기술
-Flutter: 크로스 플랫폼 앱 개발을 위한 프레임워크
-Firebase: 사용자 인증 및 데이터 관리를 위한 백엔드 서비스
-Table Calendar: 달력 UI 구현을 위한 패키지
-flutter_local_notifications: 알림 기능 구현을 위한 패키지
-timezone: 알림 시간 관리 및 설정을 위한 패키지
-기능 구현
-1. 로그인 화면
-사용자는 이메일과 비밀번호를 통해 로그인할 수 있으며, 회원가입 화면으로 이동할 수 있는 버튼도 포함되어 있습니다.
+## 1. 프로젝트 개요
+Petly는 반려동물 관리 앱으로, 사용자에게 반려동물의 정보를 등록하고 관리할 수 있는 기능을 제공합니다. 이 앱은 Flutter를 사용하여 개발하였으며, Firebase를 통해 사용자 인증 및 데이터 저장 기능을 구현하였습니다.
 
-dart
-코드 복사
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+---
 
-  @override
-  _LoginScreenState createState() => _LoginScreenState();
-}
+## 2. 주요 기능
 
-class _LoginScreenState extends State<LoginScreen> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+### 2.1. 로그인 화면
+- 사용자는 이메일과 비밀번호로 로그인할 수 있습니다.
+- Firebase Authentication을 사용하여 로그인 기능을 구현하였습니다.
 
-  Future<void> _login() async {
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
-    } catch (e) {
-      // 오류 처리
-    }
-  }
+### 2.2. 홈 화면
+- 월간 캘린더를 통해 사용자는 특정 날짜에 대한 정보를 확인할 수 있습니다.
+- 랜덤으로 반려동물에 대한 팁을 표시합니다.
+- 예방접종 알림 기능을 구현하여 특정 날짜에 알림을 제공합니다.
 
-  @override
-  Widget build(BuildContext context) {
-    // UI 구성
-  }
-}
-2. 스플래쉬 화면
-앱이 시작할 때 보여지는 화면으로, 2초 후 로그인 화면으로 자동으로 전환됩니다.
+### 2.3. 개체별 관리 화면
+- 등록한 반려동물의 정보를 표시하고, 의료 정보를 추가 및 삭제할 수 있는 기능을 제공합니다.
+- 주간 캘린더를 통해 해당 주의 정보를 가져오고 편집할 수 있습니다.
+- 예방접종 일정을 표시하여 사용자에게 알림을 제공합니다.
 
-dart
-코드 복사
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+---
 
-  @override
-  _SplashScreenState createState() => _SplashScreenState();
-}
+## 3. 진행 사항
+- 로그인 기능 구현 완료
+- 홈 화면 UI 및 기능 구현 완료
+- 개체별 관리 화면 개발 중
 
-class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-      );
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Image.asset('assets/splash_logo.png')),
-    );
-  }
-}
-3. 홈 화면
-홈 화면에서는 월간 캘린더와 랜덤으로 선택된 팁, 예방접종 정보를 표시합니다.
-
-dart
-코드 복사
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  // 필요한 변수 및 메서드 정의
-}
-4. 개체별 관리 화면
-반려동물 정보를 등록하고 관리하는 화면입니다. 의료 정보와 예방접종 일정 등을 추가할 수 있습니다. 화면 구성은 다음과 같습니다.
-
-dart
-코드 복사
-class ManagementScreen extends StatelessWidget {
-  const ManagementScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Management')),
-      body: Column(
-        children: [
-          // 반려동물 정보 표시
-          // 의료정보 추가 버튼
-          // 주간 캘린더
-          // 예방접종 일정 표시
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // 반려동물 추가
-        },
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
-}
-5. 메뉴 탭
-왼쪽 상단에 메뉴 탭을 추가하여 사용자 계정 정보와 등록된 반려동물 목록을 보여줍니다. 사용자가 반려동물 정보를 쉽게 추가하거나 수정할 수 있도록 UI를 설계했습니다.
-
-결론
-이 프로젝트를 통해 Flutter와 Firebase를 이용하여 실질적인 모바일 앱을 개발할 수 있었습니다. 앱의 주요 기능들을 구현하고 테스트하는 과정에서 많은 것을 배울 수 있었습니다. 앞으로도 지속적으로 업데이트 및 개선할 예정입니다.
+## 4. 향후 계획
+- 개체별 관리 화면 기능 완성
+- 전체적인 UI 개선 및 사용자 경험 향상
+- 세 번째 메인 페이지 개발
+하단 네비게이션 바의 세 번째 아이콘을 통해 사용자가 현재 위치를 기반으로 주변의 반려동물 동반 입장 가능한 장소를 표시하는 지도 페이지를 개발할 예정입니다.
+지도 페이지에서는 다음과 같은 정보를 제공할 계획입니다:
+동물병원: 사용자가 반려동물의 건강을 체크할 수 있는 가까운 병원 정보.
+공원: 반려동물과 함께 산책할 수 있는 공원 위치.
+동반 입장 가능한 카페: 반려동물과 함께 식사를 할 수 있는 카페 리스트.
